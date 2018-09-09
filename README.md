@@ -3,12 +3,16 @@
 An introduction to crypto exchanges [`curl`](http://curl.haxx.se/) commands.
 
 ## BITTREX ##
-
+___
+___
 
 ### PUBLIC API ###
-
-Get Markets
+___
+___
+#### Get Markets ####
+___
 Used to get the open and available trading markets at Bittrex along with other meta data.
+___
 
 basic command
 ```
@@ -21,7 +25,9 @@ curl -s https://bittrex.com/api/v1.1/public/getmarkets | \
 jq -r
 ```
 
-Get Currencies
+___
+#### Get Currencies ####
+___
 Used to get all supported currencies at Bittrex along with other meta data.
 
 basic command
@@ -35,7 +41,9 @@ curl -s https://bittrex.com/api/v1.1/public/getcurrencies | \
 jq -r
 ```
 
-Get Ticker
+___
+#### Get Ticker ####
+___
 Used to get the current tick values for a market.
 
 basic command
@@ -49,7 +57,9 @@ curl -s https://bittrex.com/api/v1.1/public/getticker?market=BTC-DGB | \
 jq -r
 ```
 
-Get Market Summaries
+___
+#### Get Market Summaries ####
+___
 Used to get the last 24 hour summary of all active markets.
 
 basic command
@@ -63,7 +73,9 @@ curl -s https://bittrex.com/api/v1.1/public/getmarketsummaries | \
 jq -r
 ```
 
-Get Market Summary
+___
+#### Get Market Summary ####
+___
 Used to get the last 24 hour summary of a specific market.
 
 basic command
@@ -77,7 +89,9 @@ curl -s https://bittrex.com/api/v1.1/public/getmarketsummary?market=BTC-DGB | \
 jq -r
 ```
 
-Get Order book
+___
+#### Get Order book ####
+___
 Used to get retrieve the orderbook for a given market.
 
 basic command
@@ -91,7 +105,9 @@ curl -s https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-DGB\&type=bo
 jq -r
 ```
 
-Get Market History
+___
+#### Get Market History ####
+___
 Used to get the last 24 hour summary of a specific market.
 
 basic command
@@ -105,10 +121,15 @@ curl -s https://bittrex.com/api/v1.1/public/getmarkethistory?market=BTC-DGB | \
 jq -r
 ```
 
+___
+___
 
 ### MARKET API ###
+___
+___
 
-#### EXPORT API KEYS FIRST ####
+
+> #### EXPORT API KEYS FIRST ####
 
 
  ```
@@ -117,11 +138,15 @@ export BITTREX_API_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
  ```
 
 
->TODO
-
+>TODO___
+___
+___
 ### ACCOUNT API ###
+___
+___
 
-#### EXPORT API KEYS FIRST ####
+
+> #### EXPORT API KEYS FIRST ####
  
 
  ```
@@ -129,8 +154,9 @@ export BITTREX_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 export BITTREX_API_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
  ```
 
-
-Get Balances
+___
+#### Get Balances ####
+___
 Used to retrieve all balances from your account.
 
 basic command
@@ -154,7 +180,9 @@ jq -r
 
 ```
 
-Get Balance
+___
+#### Get Balance ####
+___
 Used to retrieve the balance from your account for a specific currency.
 
 basic command
