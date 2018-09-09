@@ -30,6 +30,11 @@ awk -F '\t' '{print $1 "\t" $2 "\t" $3 "\t" $4 "\t" ($5=="MinTradeSize" ? $5 : s
 column -t -s $'\t'
 ```
 
+Table format output one liner
+```
+curl -s "https://bittrex.com/api/v1.1/public/getmarkets" | jq -r ' ["MarketCurrency","BaseCurrency", "MarketCurrencyLong", "BaseCurrencyLong", "MinTradeSize", "MarketName", "IsActive", "Created", "IsSponsored", "Notice"], (.result[] | [.MarketCurrency, .BaseCurrency, .MarketCurrencyLong, .BaseCurrencyLong, .MinTradeSize, .MarketName, .IsActive, .Created, .IsSponsored, .Notice]) | @tsv' | awk -F '\t' '{print $1 "\t" $2 "\t" $3 "\t" $4 "\t" ($5=="MinTradeSize" ? $5 : sprintf("%.8f",$5)) "\t" $6 "\t" ($7=="" ? "NA" : $7) "\t" $8 "\t" ($9=="" ? "NA" : $9) "\t" ($10=="" ? "NA" : $10) "\t"}' | column -t -s $'\t'
+```
+
 ___
 #### Get Currencies ####
 Used to get all supported currencies at Bittrex along with other meta data.
@@ -52,6 +57,11 @@ awk -F '\t' '{print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" ($7=="" ? "N
 column -t -s $'\t'
 ```
 
+Table format output one liner
+```
+curl -s "https://bittrex.com/api/v1.1/public/getcurrencies" | jq -r ' ["Currency", "CurrencyLong", "MinConfirmation", "TxFee", "IsActive", "CoinType", "Notice", "BaseAddress"], (.result[] | [.Currency, .CurrencyLong, .MinConfirmation, .TxFee, .IsActive, .CoinType, .Notice, .BaseAddress]) | @tsv' | awk -F '\t' '{print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" ($7=="" ? "NA" : $7) "\t" ($8=="" ? "NA" : $8)}' | column -t -s $'\t'
+```
+
 ___
 #### Get Ticker ####
 Used to get the current tick values for a market.
@@ -72,6 +82,11 @@ curl -s "https://bittrex.com/api/v1.1/public/getticker?market=BTC-DGB" | \
 jq -r ' ["Bid", "Ask", "Last"], (.result | [.Bid, .Ask, .Last]) | @tsv' | \
 awk -F '\t' '{print ($1=="Bid" ? $1 : sprintf("%.8f",$1)) "\t" ($2=="Ask" ? $2 : sprintf("%.8f",$2)) "\t" ($3=="Last" ? $3 : sprintf("%.8f",$3))}' | \
 column -t -s $'\t'
+```
+
+Table format output one liner
+```
+curl -s "https://bittrex.com/api/v1.1/public/getticker?market=BTC-DGB" | jq -r ' ["Bid", "Ask", "Last"], (.result | [.Bid, .Ask, .Last]) | @tsv' | awk -F '\t' '{print ($1=="Bid" ? $1 : sprintf("%.8f",$1)) "\t" ($2=="Ask" ? $2 : sprintf("%.8f",$2)) "\t" ($3=="Last" ? $3 : sprintf("%.8f",$3))}' | column -t -s $'\t'
 ```
 
 ___
@@ -98,6 +113,11 @@ awk -F '\t' '{print $1 "\t" ($2=="High" ? $2 : sprintf("%.8f",$2)) "\t" ($3=="Lo
 column -t -s $'\t'
 ```
 
+Table format output one liner
+```
+curl -s "https://bittrex.com/api/v1.1/public/getmarketsummaries" | jq -r '["MarketName", "High", "Low", "Volume", "Last", "BaseVolume", "TimeStamp", "Bid", "Ask", "OpenBuyOrders", "OpenSellOrders", "PrevDay", "Created", "DisplayMarketName"], (.result[] | [.MarketName, .High, .Low, .Volume, .Last, .BaseVolume, .TimeStamp, .Bid, .Ask, .OpenBuyOrders, .OpenSellOrders, .PrevDay, .Created, .DisplayMarketName]) | @tsv' | awk -F '\t' '{print $1 "\t" ($2=="High" ? $2 : sprintf("%.8f",$2)) "\t" ($3=="Low" ? $3 : sprintf("%.8f",$3)) "\t" ($4=="Volume" ? $4 : sprintf("%.8f",$4)) "\t" ($5=="Last" ? $5 : sprintf("%.8f",$5)) "\t" ($6=="BaseVolume" ? $2 : sprintf("%.8f",$2)) "\t" $7 "\t" ($8=="Bid" ? $8 : sprintf("%.8f",$8)) "\t" ($9=="Ask" ? $9 : sprintf("%.8f",$9)) "\t" $10 "\t" $11 "\t" ($12=="PrevDay" ? $12 : sprintf("%.8f",$12)) "\t" $13 "\t" $14 "\t" }' | column -t -s $'\t'
+```
+
 ___
 #### Get Market Summary ####
 Used to get the last 24 hour summary of a specific market.
@@ -120,6 +140,11 @@ jq -r '
 [.MarketName, .High, .Low, .Volume, .Last, .BaseVolume, .TimeStamp, .Bid, .Ask, .OpenBuyOrders, .OpenSellOrders, .PrevDay, .Created, .DisplayMarketName]) | @tsv' | \
 awk -F '\t' '{print $1 "\t" ($2=="High" ? $2 : sprintf("%.8f",$2)) "\t" ($3=="Low" ? $3 : sprintf("%.8f",$3)) "\t" ($4=="Volume" ? $4 : sprintf("%.8f",$4)) "\t" ($5=="Last" ? $5 : sprintf("%.8f",$5)) "\t" ($6=="BaseVolume" ? $2 : sprintf("%.8f",$2)) "\t" $7 "\t" ($8=="Bid" ? $8 : sprintf("%.8f",$8)) "\t" ($9=="Ask" ? $9 : sprintf("%.8f",$9)) "\t" $10 "\t" $11 "\t" ($12=="PrevDay" ? $12 : sprintf("%.8f",$12)) "\t" $13 "\t" $14 "\t" }' | \
 column -t -s $'\t'
+```
+
+Table format output one liner
+```
+curl -s "https://bittrex.com/api/v1.1/public/getmarketsummary?market=BTC-DGB" | jq -r '["MarketName", "High", "Low", "Volume", "Last", "BaseVolume", "TimeStamp", "Bid", "Ask", "OpenBuyOrders", "OpenSellOrders", "PrevDay", "Created", "DisplayMarketName"], (.result[] | [.MarketName, .High, .Low, .Volume, .Last, .BaseVolume, .TimeStamp, .Bid, .Ask, .OpenBuyOrders, .OpenSellOrders, .PrevDay, .Created, .DisplayMarketName]) | @tsv' | awk -F '\t' '{print $1 "\t" ($2=="High" ? $2 : sprintf("%.8f",$2)) "\t" ($3=="Low" ? $3 : sprintf("%.8f",$3)) "\t" ($4=="Volume" ? $4 : sprintf("%.8f",$4)) "\t" ($5=="Last" ? $5 : sprintf("%.8f",$5)) "\t" ($6=="BaseVolume" ? $2 : sprintf("%.8f",$2)) "\t" $7 "\t" ($8=="Bid" ? $8 : sprintf("%.8f",$8)) "\t" ($9=="Ask" ? $9 : sprintf("%.8f",$9)) "\t" $10 "\t" $11 "\t" ($12=="PrevDay" ? $12 : sprintf("%.8f",$12)) "\t" $13 "\t" $14 "\t" }' | column -t -s $'\t'
 ```
 
 ___
@@ -146,6 +171,11 @@ awk -F '\t' '{print $1 "\t" ($2=="Quantity" ? $2 : sprintf("%.8f",$2)) "\t" ($3=
 column -t -s $'\t'
 ```
 
+Table format output one liner
+```
+curl -s "https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-DGB&type=both" | jq -r '["Type", "Quantity", "Rate"], (.result | keys[] as $k | (.[$k][] | [$k, .Quantity, .Rate])) | @tsv' | awk -F '\t' '{print $1 "\t" ($2=="Quantity" ? $2 : sprintf("%.8f",$2)) "\t" ($3=="Rate" ? $3 : sprintf("%.8f",$3)) }' | column -t -s $'\t'
+```
+
 ___
 #### Get Market History ####
 Used to get the last 24 hour summary of a specific market.
@@ -168,6 +198,11 @@ jq -r '
 [.Id, .TimeStamp, .Quantity, .Price, .Total, .FillType, .OrderType]) | @tsv' | \
 awk -F '\t' '{print $1 "\t" $2 "\t" ($3=="Quantity" ? $3 : sprintf("%.8f",$3)) "\t" ($4=="Price" ? $4 : sprintf("%.8f",$4)) "\t" ($5=="Total" ? $5 : sprintf("%.8f",$5)) "\t" $6 "\t" $7 "\t" }' | \
 column -t -s $'\t'
+```
+
+Table format output one liner
+```
+curl -s "https://bittrex.com/api/v1.1/public/getmarkethistory?market=BTC-DGB" | jq -r '["Id", "TimeStamp", "Quantity", "Price", "Total", "FillType", "OrderType"], (.result[] | [.Id, .TimeStamp, .Quantity, .Price, .Total, .FillType, .OrderType]) | @tsv' | awk -F '\t' '{print $1 "\t" $2 "\t" ($3=="Quantity" ? $3 : sprintf("%.8f",$3)) "\t" ($4=="Price" ? $4 : sprintf("%.8f",$4)) "\t" ($5=="Total" ? $5 : sprintf("%.8f",$5)) "\t" $6 "\t" $7 "\t" }' | column -t -s $'\t'
 ```
 
 ___
