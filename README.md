@@ -337,3 +337,8 @@ Table format output one liner
 ```
 NONCE=$(date +%s) && URL="https://bittrex.com/api/v1.1/account/getbalance?apikey=$BITTREX_API_KEY&nonce=$NONCE&currency=DGB" && API_SIGN=$(echo -n $URL | openssl sha512 -hmac $BITTREX_API_SECRET) && curl -H "apisign: $API_SIGN" -s $URL | jq -r ' ["Currency", "Balance", "Available", "Pending", "CryptoAddress", "Requested", "Uuid"], (.result | [.Currency, .Balance, .Available, .Pending, .CryptoAddress, .Requested, .Uuid]) | @tsv' | awk -F '\t' '{print $1 "\t" ($2=="Balance" ? $2 : sprintf("%.8f",$2)) "\t" ($3=="Available" ? $3 : sprintf("%.8f",$3)) "\t" ($4=="Pending" ? $4 : sprintf("%.8f",$4)) "\t" $5 "\t" $6 "\t" $7}' | column -t -s $'\t'
 ```
+
+> @TODO
+> ADD MISSING BITTREX APIS commands
+> ADD POLONIX API commands
+> ADD BINANCE API commands
